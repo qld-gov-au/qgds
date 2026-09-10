@@ -33,7 +33,7 @@ uses plugins on the GitHub Pages allow-list (`jekyll-seo-tag`,
 ## How the navigation works
 
 There is **one** navigation for the whole site — a `qgds-navigation` with
-`variant="vertical"`, matching designsystem.qld.gov.au. `_includes/site-nav.html`
+`variant="vertical"`, matching designsystem.qld.gov.au. `_includes/nav.html`
 reads `page.path` — the *source* path of each page — and groups `site.pages` by
 folder:
 
@@ -152,14 +152,14 @@ _layouts/
   home.html              home page with hero banner
 _includes/
   head.html              CDN/local asset switch
-  site-header.html       header, search, and the navigation
-  site-footer.html       footer
-  site-nav.html          folder-driven whole-site vertical navigation
+  header.html            header, search, and the navigation
+  footer.html            footer
+  nav.html               folder-driven whole-site vertical navigation
   breadcrumbs.html       path-driven breadcrumbs
   section-cards.html     auto card grid of child pages
   example.html           live example + copyable source
 assets/
-  css/site.css           documentation chrome only
+  css/style.css          documentation chrome only
   js/site.js             nav docking, on-this-page, copy code, search
   vendor/                target for scripts/vendor-qgds.sh
 search.json              generated search index
@@ -169,7 +169,7 @@ search.html              search results page
 
 ## What is deliberately not styled here
 
-`assets/css/site.css` styles the documentation chrome — layout, long-form
+`assets/css/style.css` styles the documentation chrome — layout, long-form
 typography, example blocks, code. It never reaches into a component. Components
 render into shadow roots; customise them through the QGDS CSS custom properties
 (`--qgds-color-*`, `--qgds-line-height-*`, and so on), not with descendant
