@@ -1,0 +1,42 @@
+{%- comment -%}
+  Card grid of everything one level below the current page. Used on section
+  landing pages so a new .md file shows up on the index automatically.
+{%- endcomment -%}
+
+{%- assign here = page.path | split: "/" -%}
+{%- assign here_depth = here | size -%}
+{%- assign scope = "" -%}
+{%- if here_depth == 2 -%}
+  {%- assign scope = here[0] | append: "/" -%}
+  {%- assign want_depth = 2 -%}
+  {%- assign want_folder_depth = 3 -%}
+{%- else -%}
+  {%- assign scope = here[0] | append: "/" | append: here[1] | append: "/" -%}
+  {%- assign want_depth = 3 -%}
+  {%- assign want_folder_depth = 4 -%}
+{%- endif -%}
+
+{%- assign children = site.pages
+      | where_exp: "p", "p.title"
+      | where_exp: "p", "p.nav_exclude != true"
+      | where_exp: "p", "p.path contains scope"
+      | sort: "nav_order" -%}
+
+<div class="dsq-card-grid">
+{%- for item in children -%}
+  {%- assign seg = item.path | split: "/" -%}
+  {%- assign depth = seg | size -%}
+  {%- assign show = false -%}
+  {%- assign last = seg | last -%}
+  {%- if depth == want_depth and last != "index.md" -%}{%- assign show = true -%}{%- endif -%}
+  {%- if depth == want_folder_depth and last == "index.md" -%}{%- assign show = true -%}{%- endif -%}
+  {%- unless show -%}{%- continue -%}{%- endunless -%}
+  <qgds-card
+    heading="{{ item.nav_title | default: item.title }}"
+    heading-level="h3"
+    href="{{ item.url | relative_url }}"
+    variant="arrow">
+    {{ item.summary | default: item.description | default: "" }}
+  </qgds-card>
+{%- endfor -%}
+</div>
