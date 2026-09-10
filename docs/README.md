@@ -159,7 +159,7 @@ _includes/
   section-cards.html     auto card grid of child pages
   example.html           live example + copyable source
 assets/
-  css/site.css          documentation chrome only
+  css/site.css           documentation chrome only
   js/site.js             nav docking, on-this-page, copy code, search
   vendor/                target for scripts/vendor-qgds.sh
 search.json              generated search index
