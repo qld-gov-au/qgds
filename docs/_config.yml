@@ -1,12 +1,113 @@
+# ---------------------------------------------------------------------------
+# Site
+# ---------------------------------------------------------------------------
 title: Queensland Government Design System
-markdown: kramdown
+description: >-
+  Guidance, components and code to help Queensland Government teams build
+  consistent, accessible digital services.
+lang: en-AU
 
-# Every page uses the default layout, so new pages only need a title.
+# Leave `url` blank for local dev. For GitHub Pages set:
+#   url: "https://<org>.github.io"
+#   baseurl: "/<repo-name>"        # project site
+#   baseurl: ""                    # user/org site or custom domain
+url: ""
+baseurl: ""
+
+# ---------------------------------------------------------------------------
+# QGDS web components
+# ---------------------------------------------------------------------------
+# source: cdn   -> load ESM + CSS from jsDelivr (nothing to install)
+# source: local -> load from assets/vendor/qgds (run scripts/vendor-qgds.sh first)
+qgds:
+  version: "0.3.4"
+  source: cdn
+  cdn_base: "https://cdn.jsdelivr.net/npm/@qld-gov-au/qgds-web-components"
+  local_base: "/assets/vendor/qgds"
+
+# ---------------------------------------------------------------------------
+# Chrome (header / footer content)
+# ---------------------------------------------------------------------------
+brand:
+  site_name: "Design System"
+  site_name_prefix: "Queensland Government"
+  logo: "coa-delivering-for-qld"
+  home_label: "Queensland Government Design System"
+
+contact:
+  email: "qgdesignsystem@qld.gov.au"
+  statement: "Contact the design system team for help, feedback or to propose a change."
+
+footer:
+  acknowledgement: >-
+    We acknowledge the Traditional Owners and their custodianship of the lands
+    and waters of Queensland, and pay our respects to Elders past, present and
+    emerging.
+  copyright: "© The State of Queensland"
+  site_links:
+    - label: "Copyright"
+      href: "https://www.qld.gov.au/legal/copyright"
+    - label: "Disclaimer"
+      href: "https://www.qld.gov.au/legal/disclaimer"
+    - label: "Privacy"
+      href: "https://www.qld.gov.au/legal/privacy"
+    - label: "Accessibility"
+      href: "https://www.qld.gov.au/help/accessibility"
+    - label: "Right to information"
+      href: "https://www.qld.gov.au/right-to-information"
+  custom_links_heading: "Design system"
+  custom_links:
+    - label: "GitHub"
+      href: "https://github.com/qld-gov-au"
+    - label: "Storybook"
+      href: "https://qld-gov-au.github.io/qgds-web-components/"
+    - label: "Figma UI Kit"
+      href: "https://www.figma.com/community/file/1577907940583715898/queensland-government-design-system-ui-kit"
+    - label: "Release notes"
+      href: "/about/release-notes.html"
+
+# Optional site-wide alert. Set `enabled: false` to hide.
+global_alert:
+  enabled: true
+  variant: general
+  heading: "This is a demonstration site"
+  body: "Content is illustrative and is not the official Queensland Government Design System."
+  action_label: "Visit the official design system"
+  action_href: "https://www.designsystem.qld.gov.au/"
+
+# ---------------------------------------------------------------------------
+# Build
+# ---------------------------------------------------------------------------
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  auto_ids: true
+  toc_levels: 2..3
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# NOTE: do NOT set `permalink: pretty`. The folder-driven navigation reads
+# `page.path` (the source path), which is permalink independent, but the
+# default `/:path/:basename.html` permalink keeps URLs and folders aligned.
+
 defaults:
   - scope:
       path: ""
+      type: pages
     values:
-      layout: default
+      layout: page
+      nav_order: 100
 
 exclude:
+  - Gemfile
+  - Gemfile.lock
   - README.md
+  - CONTRIBUTING.md
+  - scripts/
+  - node_modules/
+  - vendor/
+  - .github/

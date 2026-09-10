@@ -1,0 +1,39 @@
+{%- comment -%}
+================================================================================
+  Live example + source code
+================================================================================
+  Usage inside any .md page:
+
+    {% raw %}{% capture demo %}
+    <qgds-button label="Save and continue" variant="primary"></qgds-button>
+    {% endcapture %}
+    {% include example.html code=demo title="Primary button" %}{% endraw %}
+
+  Parameters
+    code      required — the markup to render live and show as source
+    title     optional — caption above the example
+    palette   optional — default | soft | muted | bold | deep
+    padded    optional — "false" to remove the preview padding
+================================================================================
+{%- endcomment -%}
+
+{%- assign uid = include.title | default: "example" | slugify | append: "-" | append: forloop.index0 -%}
+<div class="dsq-example{% if include.palette and include.palette != 'default' %} qgds-palette-{{ include.palette }}{% endif %}">
+  {%- if include.title -%}
+  <p class="dsq-example__title">{{ include.title }}</p>
+  {%- endif -%}
+
+  <div class="dsq-example__preview{% if include.padded == 'false' %} dsq-example__preview--flush{% endif %}">
+    {{ include.code }}
+  </div>
+
+  <details class="dsq-example__source">
+    <summary>
+      <span>Show code</span>
+    </summary>
+    <div class="dsq-example__code">
+      <button type="button" class="dsq-copy" data-copy>Copy</button>
+      <pre><code class="language-html">{{ include.code | strip | escape }}</code></pre>
+    </div>
+  </details>
+</div>

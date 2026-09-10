@@ -1,0 +1,30 @@
+{%- comment -%}
+  Resolves the QGDS asset base from _config.yml (`qgds.source`: cdn | local).
+{%- endcomment -%}
+{%- if site.qgds.source == "local" -%}
+  {%- assign qgds_css = site.qgds.local_base | append: "/css/qgds-web-components.css" | relative_url -%}
+  {%- assign qgds_js  = site.qgds.local_base | append: "/js/qgds-web-components.js"  | relative_url -%}
+{%- else -%}
+  {%- assign qgds_root = site.qgds.cdn_base | append: "@" | append: site.qgds.version | append: "/dist/assets" -%}
+  {%- assign qgds_css = qgds_root | append: "/css/qgds-web-components.css" -%}
+  {%- assign qgds_js  = qgds_root | append: "/js/qgds-web-components.js" -%}
+{%- endif -%}
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+{%- seo -%}
+
+<!-- The QGDS stylesheet @imports Noto Sans itself; these just warm the connection -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- QGDS web components: styles + ESM bundle. The bundle is ESM only — it must
+     be type="module". A plain <script src> will not register the elements. -->
+<link rel="stylesheet" href="{{ qgds_css }}">
+<script type="module" src="{{ qgds_js }}"></script>
+
+<link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+<script defer src="{{ '/assets/js/site.js' | relative_url }}"></script>
+
+<link rel="icon" href="{{ '/assets/favicon.svg' | relative_url }}" type="image/svg+xml">

@@ -1,0 +1,27 @@
+---
+layout: default
+---
+<div class="qgds-container dsq-layout">
+
+  <div class="dsq-layout__nav" id="dsq-nav-rail"></div>
+
+  <div class="dsq-layout__main">
+    <div class="dsq-breadcrumbs">
+      {%- include breadcrumbs.html -%}
+    </div>
+
+    <header class="dsq-page-header">
+      <h1>{{ page.title }}</h1>
+      {%- if page.summary -%}<p class="dsq-lead">{{ page.summary }}</p>{%- endif -%}
+    </header>
+
+    <div class="dsq-content" data-content>
+      {{ content }}
+    </div>
+
+    {%- unless page.hide_cards -%}
+    <h2 class="dsq-section-cards-heading">{{ page.cards_heading | default: "In this section" }}</h2>
+    {%- include section-cards.html -%}
+    {%- endunless -%}
+  </div>
+</div>

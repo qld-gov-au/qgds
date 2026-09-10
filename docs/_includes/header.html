@@ -1,0 +1,43 @@
+{%- comment -%}
+  Site chrome: skip links, global alert, and the header (logo, site name,
+  search, and the whole-site vertical navigation).
+{%- endcomment -%}
+
+<qgds-skip-links
+  content-target="#main-content"
+  content-target-label="Skip to main content"
+  navigation-target="#main-nav"
+  navigation-target-label="Skip to main navigation"></qgds-skip-links>
+
+{%- if site.global_alert.enabled -%}
+<qgds-global-alert
+  variant="{{ site.global_alert.variant | default: 'general' }}"
+  heading="{{ site.global_alert.heading }}"
+  {% if site.global_alert.action_label %}action-label="{{ site.global_alert.action_label }}" action-href="{{ site.global_alert.action_href }}"{% endif %}
+  is-dismissible>
+  <p>{{ site.global_alert.body }}</p>
+</qgds-global-alert>
+{%- endif -%}
+
+<qgds-header site-name="{{ site.brand.site_name }}">
+  <qgds-attribution-bar slot="pre-header">
+    <qgds-link slot="site-name" href="https://www.qld.gov.au" label="Queensland Government"></qgds-link>
+    <qgds-link href="{{ '/about/contact.html' | relative_url }}" label="Contact us"></qgds-link>
+  </qgds-attribution-bar>
+
+  <qgds-logo
+    slot="logo"
+    logo="{{ site.brand.logo }}"
+    href="{{ '/' | relative_url }}"
+    alt="{{ site.brand.home_label }} home"></qgds-logo>
+
+  <qgds-search-input
+    slot="search"
+    id="site-search"
+    name="q"
+    placeholder="Search the design system"
+    data-search-endpoint="{{ '/search.json' | relative_url }}"
+    data-search-page="{{ '/search.html' | relative_url }}"></qgds-search-input>
+
+  {%- include nav.html -%}
+</qgds-header>

@@ -1,54 +1,21 @@
 <!DOCTYPE html>
-<html lang="en-AU">
+<html lang="{{ site.lang | default: 'en-AU' }}">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page.title and page.title != "Home" %}{{ page.title }} | {% endif %}{{ site.title }}</title>
-  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+  {%- include head.html -%}
 </head>
-<body>
-  <a class="skip-link" href="#content">Skip to main content</a>
+{%- comment -%}
+  `class="qgds"` scopes the library's CSS reset to the page.
+  `data-qgds-theme="light"` is what defines the colour tokens — without it,
+  --qgds-color-* resolve to nothing and components render unstyled colours.
+  A section can override the palette with a `qgds-palette-*` class.
+{%- endcomment -%}
+<body class="qgds" data-qgds-theme="light">
+  {%- include header.html -%}
 
-  <header class="site-header">
-    <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
-  </header>
+  <main id="main-content" tabindex="-1">
+    {{ content }}
+  </main>
 
-  <div class="page">
-    <details class="site-nav" id="site-nav" open>
-      <summary>Menu</summary>
-      <nav aria-label="Main">
-        {% capture sidebar %}{% include sidebar.md %}{% endcapture %}
-        {{ sidebar | markdownify }}
-      </nav>
-    </details>
-
-    <qgds-side-navigation>
-        {% capture sidebar %}{% include sidebar.md %}{% endcapture %}
-        {{ sidebar | markdownify }}
-    </qgds-side-navigation>
-
-    <main id="content">
-      {{ content }}
-    </main>
-  </div>
-
-  <footer class="site-footer">
-    {% capture footer %}{% include footer.md %}{% endcapture %}
-    {{ footer | markdownify }}
-  </footer>
-
-  <script>
-    // Sidebar is always open on wide screens and collapses into a Menu toggle on small ones.
-    const nav = document.getElementById('site-nav');
-    const wide = window.matchMedia('(min-width: 60em)');
-    const sync = () => { nav.open = wide.matches; };
-    sync();
-    wide.addEventListener('change', sync);
-  </script>
-
-  <script type="module">
-    import "@qld-gov-au/qgds-web-components/styles";
-    import "@qld-gov-au/qgds-web-components";
-  </script>
+  {%- include footer.html -%}
 </body>
 </html>

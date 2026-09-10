@@ -1,0 +1,36 @@
+{%- comment -%}
+  Breadcrumbs derived from the page's source path. Each ancestor folder resolves
+  to its index.md so the label and URL stay in sync with the content.
+{%- endcomment -%}
+
+{%- assign seg = page.path | split: "/" -%}
+{%- assign depth = seg | size -%}
+
+<qgds-breadcrumbs aria-label="Breadcrumb">
+  <qgds-breadcrumbs-item url="{{ '/' | relative_url }}">Home</qgds-breadcrumbs-item>
+
+  {%- if depth > 1 -%}
+    {%- assign section_index_path = seg[0] | append: "/index.md" -%}
+    {%- assign section_index = site.pages | where_exp: "p", "p.path == section_index_path" | first -%}
+    {%- if section_index -%}
+      {%- assign is_last_section = false -%}
+      {%- if page.url == section_index.url %}{% assign is_last_section = true %}{% endif -%}
+      <qgds-breadcrumbs-item url="{{ section_index.url | relative_url }}" {% if is_last_section %}is-last{% endif %}>{{ section_index.nav_title | default: section_index.title }}</qgds-breadcrumbs-item>
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- if depth > 2 -%}
+    {%- assign folder_index_path = seg[0] | append: "/" | append: seg[1] | append: "/index.md" -%}
+    {%- assign folder_index = site.pages | where_exp: "p", "p.path == folder_index_path" | first -%}
+    {%- if folder_index -%}
+      {%- assign is_last_folder = false -%}
+      {%- if page.url == folder_index.url %}{% assign is_last_folder = true %}{% endif -%}
+      <qgds-breadcrumbs-item url="{{ folder_index.url | relative_url }}" {% if is_last_folder %}is-last{% endif %}>{{ folder_index.nav_title | default: folder_index.title }}</qgds-breadcrumbs-item>
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- assign last_seg = seg | last -%}
+  {%- if last_seg != "index.md" -%}
+    <qgds-breadcrumbs-item is-last>{{ page.nav_title | default: page.title }}</qgds-breadcrumbs-item>
+  {%- endif -%}
+</qgds-breadcrumbs>
