@@ -159,7 +159,7 @@ _includes/
   section-cards.html     auto card grid of child pages
   example.html           live example + copyable source
 assets/
-  css/style.css          documentation chrome only
+  css/site.css          documentation chrome only
   js/site.js             nav docking, on-this-page, copy code, search
   vendor/                target for scripts/vendor-qgds.sh
 search.json              generated search index
@@ -169,7 +169,7 @@ search.html              search results page
 
 ## What is deliberately not styled here
 
-`assets/css/style.css` styles the documentation chrome — layout, long-form
+`assets/css/site.css` styles the documentation chrome — layout, long-form
 typography, example blocks, code. It never reaches into a component. Components
 render into shadow roots; customise them through the QGDS CSS custom properties
 (`--qgds-color-*`, `--qgds-line-height-*`, and so on), not with descendant
