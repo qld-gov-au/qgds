@@ -1,0 +1,12 @@
+title: Queensland Government Design System
+markdown: kramdown
+
+# Every page uses the default layout, so new pages only need a title.
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+exclude:
+  - README.md

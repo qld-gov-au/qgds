@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title and page.title != "Home" %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to main content</a>
+
+  <header class="site-header">
+    <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
+  </header>
+
+  <div class="page">
+    <details class="site-nav" id="site-nav" open>
+      <summary>Menu</summary>
+      <nav aria-label="Main">
+        {% capture sidebar %}{% include sidebar.md %}{% endcapture %}
+        {{ sidebar | markdownify }}
+      </nav>
+    </details>
+
+    <main id="content">
+      {{ content }}
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    {% capture footer %}{% include footer.md %}{% endcapture %}
+    {{ footer | markdownify }}
+  </footer>
+
+  <script>
+    // Sidebar is always open on wide screens and collapses into a Menu toggle on small ones.
+    const nav = document.getElementById('site-nav');
+    const wide = window.matchMedia('(min-width: 60em)');
+    const sync = () => { nav.open = wide.matches; };
+    sync();
+    wide.addEventListener('change', sync);
+  </script>
+</body>
+</html>

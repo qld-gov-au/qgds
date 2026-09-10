@@ -1,34 +1,34 @@
 ---
-title: Queensland Government Design System
-source: https://www.designsystem.qld.gov.au/
-last_updated: September 2026
+title: Home
 ---
 
 # Queensland Government Design System
 
 The Queensland Government Design System helps teams create consistent, user-centric digital experiences quickly.
 
+[Get started](https://www.designsystem.qld.gov.au/get-started)
+
 ## Explore the design system
 
-### [Get started](/get-started)
+### [Get started](https://www.designsystem.qld.gov.au/get-started)
 How to design and develop using the design system.
 
-### [Brand requirements](/brand-foundations)
+### [Brand requirements](https://www.designsystem.qld.gov.au/brand-foundations)
 The brand categorisation system and styling rules that underpin a site's design.
 
-### [Core styles](/styles)
+### [Core styles](https://www.designsystem.qld.gov.au/styles)
 Core styles define the look and feel of all parts of the design system and includes colour, typography and grid system.
 
-### [Components](/components)
+### [Components](https://www.designsystem.qld.gov.au/components)
 Building blocks for interactive user interfaces.
 
-### [Patterns](/patterns)
+### [Patterns](https://www.designsystem.qld.gov.au/patterns)
 Best practice solutions that solve common design problems and help ensure consistency.
 
-### [Templates](/templates)
+### [Templates](https://www.designsystem.qld.gov.au/templates)
 The basic page templates and patterns used in the design system.
 
-### [About](/about)
+### [About](https://www.designsystem.qld.gov.au/about)
 About the design system, its history and our processes.
 
 ## What's new
@@ -58,3 +58,5 @@ Find out how you can [contribute](https://www.designsystem.qld.gov.au/about/cont
 If you're looking to use this design system for your website or digital product or would like to talk to the Queensland Government Design System team, please email [qgdesignsystem@qld.gov.au](mailto:qgdesignsystem@qld.gov.au).
 
 **Last updated:** September 2026
+
+*Source: [designsystem.qld.gov.au](https://www.designsystem.qld.gov.au/)*
