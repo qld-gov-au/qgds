@@ -1,0 +1,465 @@
+---
+# Front matter makes Jekyll process this file. `layout: null` stops the
+# site-wide default layout from wrapping it in HTML.
+layout: null
+sitemap: false
+---
+/* =========================================================================
+   Design system documentation site
+   -------------------------------------------------------------------------
+   Only the documentation *chrome* lives here. Anything that renders a QGDS
+   component is styled by qgds-web-components.css — never override component
+   internals from this file; use the QGDS custom properties instead.
+   ========================================================================= */
+
+:root {
+  --dsq-max-content: 47rem;
+  --dsq-nav-width: 17rem;
+  --dsq-gap: 2rem;
+  --dsq-radius: var(--qgds-border-radius, 0.25rem);
+  --dsq-code-bg: #f5f5f5;
+  --dsq-code-border: var(--qgds-color-border-alt, #848484);
+}
+
+body {
+  background: var(--qgds-color-background, #fff);
+  color: var(--qgds-color-text-default, #1a1a1a);
+  font-family: var(--qgds-font-family);
+}
+
+main:focus { outline: none; }
+
+/* -------------------------------------------------------------------------
+   Page shell
+   ------------------------------------------------------------------------- */
+
+.dsq-breadcrumbs { padding-block: 0 1.5rem; }
+
+.dsq-layout {
+  display: grid;
+  gap: var(--dsq-gap);
+  grid-template-columns: 1fr;
+  padding-block: 1rem 4rem;
+  align-items: start;
+}
+
+@media (min-width: 992px) {
+  .dsq-layout {
+    grid-template-columns: var(--dsq-nav-width) minmax(0, 1fr);
+    gap: 3rem;
+  }
+}
+
+.dsq-layout__main { min-width: 0; max-width: var(--dsq-max-content); }
+
+.dsq-home { padding-block: 2.5rem 4rem; }
+
+/* -------------------------------------------------------------------------
+   Page header
+   ------------------------------------------------------------------------- */
+
+.dsq-page-header { margin-block-end: 2rem; }
+
+.dsq-eyebrow {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--qgds-color-text-subtle, #3d3d3d);
+  margin: 0 0 0.5rem;
+}
+
+.dsq-page-header h1 {
+  font-size: clamp(2rem, 1.4rem + 2.2vw, 3rem);
+  line-height: var(--qgds-line-height-heading, 1.25);
+  color: var(--qgds-color-text-heading, #000053);
+  margin: 0;
+}
+
+.dsq-lead {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--qgds-color-text-subtle, #3d3d3d);
+  margin: 1rem 0 0;
+  max-width: 42rem;
+}
+
+.dsq-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0 0; }
+
+/* -------------------------------------------------------------------------
+   Long-form content
+   ------------------------------------------------------------------------- */
+
+.dsq-content { font-size: 1rem; line-height: var(--qgds-line-height-default, 1.45); }
+
+.dsq-content > * + * { margin-block-start: 1rem; }
+
+.dsq-content h2,
+.dsq-content h3,
+.dsq-content h4 {
+  color: var(--qgds-color-text-heading, #000053);
+  line-height: var(--qgds-line-height-heading, 1.25);
+  margin-block: 2.5rem 0.75rem;
+  scroll-margin-block-start: 1.5rem;
+}
+
+.dsq-content h2 { font-size: 1.75rem; }
+.dsq-content h3 { font-size: 1.3125rem; }
+.dsq-content h4 { font-size: 1.0625rem; }
+
+.dsq-content h2:first-child,
+.dsq-content h3:first-child { margin-block-start: 0; }
+
+.dsq-content p { margin-block: 0; max-width: 42rem; }
+
+.dsq-content ul,
+.dsq-content ol { padding-inline-start: var(--qgds-list-padding, 1.5rem); max-width: 42rem; }
+.dsq-content li + li { margin-block-start: 0.375rem; }
+
+.dsq-content a {
+  color: var(--qgds-color-link-default, #09549f);
+  text-decoration-thickness: var(--qgds-link-decoration-thickness, 1px);
+  text-underline-offset: 0.2em;
+}
+.dsq-content a:hover { text-decoration-thickness: 2px; }
+.dsq-content a:focus-visible {
+  outline: 3px solid var(--qgds-color-focus-default, #002e85);
+  outline-offset: 2px;
+}
+
+.dsq-content hr {
+  border: 0;
+  border-block-start: 1px solid var(--qgds-color-border, #ddd);
+  margin-block: 2.5rem;
+}
+
+.dsq-content blockquote {
+  margin-inline: 0;
+  padding-inline-start: 1rem;
+  border-inline-start: 4px solid var(--qgds-color-accent-design-accent, #84d3ff);
+  color: var(--qgds-color-text-subtle, #3d3d3d);
+}
+
+/* Tables written as plain markdown still get the QGDS look */
+.dsq-content table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  display: block;
+  overflow-x: auto;
+}
+.dsq-content th,
+.dsq-content td {
+  text-align: start;
+  padding: 0.75rem;
+  border-block-end: 1px solid var(--qgds-color-border, #ddd);
+  vertical-align: top;
+}
+.dsq-content thead th {
+  border-block-end: 2px solid var(--qgds-color-text-heading, #000053);
+  color: var(--qgds-color-text-heading, #000053);
+}
+
+/* -------------------------------------------------------------------------
+   Code
+   ------------------------------------------------------------------------- */
+
+.dsq-content code,
+.dsq-example__code code {
+  font-family: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.875em;
+}
+
+.dsq-content :not(pre) > code {
+  background: var(--dsq-code-bg);
+  border: 1px solid var(--qgds-color-border, #ddd);
+  border-radius: var(--dsq-radius);
+  padding: 0.1em 0.35em;
+  overflow-wrap: break-word;
+}
+
+.dsq-content pre,
+.dsq-example__code pre {
+  background: var(--dsq-code-bg);
+  border: 1px solid var(--qgds-color-border, #ddd);
+  border-radius: var(--dsq-radius);
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  tab-size: 2;
+}
+
+.dsq-content pre code { background: none; border: 0; padding: 0; }
+
+/* The measure cap is for prose only — it must not constrain example chrome */
+.dsq-example p,
+.dsq-example ul,
+.dsq-example ol { max-width: none; }
+
+/* -------------------------------------------------------------------------
+   Live example blocks
+   ------------------------------------------------------------------------- */
+
+.dsq-example {
+  border: 1px solid var(--qgds-color-border, #ddd);
+  border-radius: var(--dsq-radius);
+  margin-block: 1.5rem;
+  overflow: hidden;
+}
+
+.dsq-example__title {
+  margin: 0;
+  padding: 0.625rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--qgds-color-text-subtle, #3d3d3d);
+  background: var(--qgds-color-background-shade, #f5f5f5);
+  border-block-end: 1px solid var(--qgds-color-border, #ddd);
+}
+
+.dsq-example__preview {
+  padding: 1.75rem;
+  background: var(--qgds-color-background, #fff);
+  display: flow-root;
+}
+.dsq-example__preview--flush { padding: 0; }
+.dsq-example__preview > * + * { margin-block-start: 1rem; }
+
+.dsq-example__source {
+  border-block-start: 1px solid var(--qgds-color-border, #ddd);
+  background: var(--qgds-color-background-shade, #f5f5f5);
+}
+
+.dsq-example__source > summary {
+  cursor: pointer;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--qgds-color-link-default, #09549f);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.dsq-example__source > summary::-webkit-details-marker { display: none; }
+.dsq-example__source > summary::before {
+  content: "";
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  border-inline-end: 2px solid currentColor;
+  border-block-end: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 0.15s ease-out;
+}
+.dsq-example__source[open] > summary::before { transform: rotate(45deg); }
+.dsq-example__source > summary:focus-visible {
+  outline: 3px solid var(--qgds-color-focus-default, #002e85);
+  outline-offset: -3px;
+}
+
+.dsq-example__code { position: relative; padding: 0 1rem 1rem; }
+.dsq-example__code pre { background: var(--qgds-color-background, #fff); }
+
+.dsq-copy {
+  position: absolute;
+  inset-block-start: 0.5rem;
+  inset-inline-end: 1.5rem;
+  z-index: 1;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.625rem;
+  cursor: pointer;
+  color: var(--qgds-color-link-default, #09549f);
+  background: var(--qgds-color-background, #fff);
+  border: 1px solid var(--qgds-color-border, #ddd);
+  border-radius: var(--dsq-radius);
+}
+.dsq-copy:hover { background: var(--qgds-color-background-shade, #f5f5f5); }
+.dsq-copy:focus-visible {
+  outline: 3px solid var(--qgds-color-focus-default, #002e85);
+  outline-offset: 2px;
+}
+
+/* -------------------------------------------------------------------------
+   Do / Don't guidance pairs
+   ------------------------------------------------------------------------- */
+
+.dsq-guidance {
+  display: grid;
+  gap: 1.5rem;
+  margin-block: 1.5rem;
+}
+@media (min-width: 700px) {
+  .dsq-guidance { grid-template-columns: 1fr 1fr; }
+}
+
+.dsq-guidance__item {
+  border-block-start: 4px solid var(--qgds-color-border, #ddd);
+  padding-block-start: 0.75rem;
+}
+.dsq-guidance__item--do { border-block-start-color: var(--qgds-color-status-success-default, #2b8a3e); }
+.dsq-guidance__item--dont { border-block-start-color: var(--qgds-color-status-error-default, #b3241d); }
+
+.dsq-guidance__item h4 { margin-block: 0 0.5rem !important; font-size: 1rem; }
+.dsq-guidance__item ul { margin-block-start: 0.5rem; }
+
+/* -------------------------------------------------------------------------
+   Card grids
+   ------------------------------------------------------------------------- */
+
+.dsq-card-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+  margin-block: 1.5rem;
+}
+
+.dsq-section-cards-heading {
+  margin-block: 3rem 0;
+  color: var(--qgds-color-text-heading, #000053);
+  font-size: 1.75rem;
+}
+
+/* -------------------------------------------------------------------------
+   Colour + token swatches
+   ------------------------------------------------------------------------- */
+
+.dsq-swatches {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+  margin-block: 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+.dsq-swatch {
+  border: 1px solid var(--qgds-color-border, #ddd);
+  border-radius: var(--dsq-radius);
+  overflow: hidden;
+}
+.dsq-swatch__chip { block-size: 4.5rem; }
+.dsq-swatch__body { padding: 0.75rem; font-size: 0.8125rem; }
+.dsq-swatch__name { display: block; font-weight: 600; }
+.dsq-swatch__token {
+  display: block;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  color: var(--qgds-color-text-subtle, #3d3d3d);
+  overflow-wrap: anywhere;
+}
+
+/* -------------------------------------------------------------------------
+   In-page navigation + page footer
+   ------------------------------------------------------------------------- */
+
+#dsq-inpage-nav { display: block; margin-block-end: 2rem; }
+#dsq-inpage-nav[hidden] { display: none; }
+
+.dsq-page-footer {
+  margin-block-start: 4rem;
+  padding-block-start: 1.5rem;
+  border-block-start: 1px solid var(--qgds-color-border, #ddd);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+.dsq-page-footer p { margin: 0; }
+.dsq-updated { color: var(--qgds-color-text-subtle, #3d3d3d); }
+
+/* -------------------------------------------------------------------------
+   Search results
+   ------------------------------------------------------------------------- */
+
+.dsq-results { list-style: none; padding: 0; margin-block: 1.5rem; }
+.dsq-results li { padding-block: 1rem; border-block-end: 1px solid var(--qgds-color-border, #ddd); }
+.dsq-results a { font-size: 1.125rem; font-weight: 600; }
+.dsq-results p { margin-block-start: 0.25rem; color: var(--qgds-color-text-subtle, #3d3d3d); }
+.dsq-results__section {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--qgds-color-text-subtle, #3d3d3d);
+  margin-block-end: 0.25rem;
+}
+
+.sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* -------------------------------------------------------------------------
+   Whole-site vertical navigation
+   -------------------------------------------------------------------------
+   The nav itself is qgds-navigation; these rules only position it and mark
+   the current page. Everything inside it is styled by the component.
+   ------------------------------------------------------------------------- */
+
+#dsq-nav-rail:empty { display: none; }
+
+@media (min-width: 992px) {
+  #dsq-nav-rail {
+    position: sticky;
+    top: 1rem;
+    max-block-size: calc(100vh - 2rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-block: 0.5rem;
+    border-inline-end: 1px solid var(--qgds-color-border, #ddd);
+    padding-inline-end: 1rem;
+  }
+}
+
+/* Current page. Nested items are not nav items, so the component renders no
+   aria-current for them — these rules are the only visible cue. Font weight
+   and colour are inherited properties, so they cross into the shadow root. */
+qgds-link-item[data-current] {
+  font-weight: 600;
+  color: var(--qgds-color-text-heading, #000053);
+  box-shadow: inset 3px 0 0 0 var(--qgds-color-action-primary, #005eb8);
+}
+
+/* Third-level items sit under a sub-folder index */
+qgds-link-item.dsq-nav-level-3 { padding-inline-start: 1rem; }
+
+/* -------------------------------------------------------------------------
+   Search form
+   ------------------------------------------------------------------------- */
+
+.dsq-search-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-block: 1.5rem;
+  max-inline-size: 34rem;
+}
+.dsq-search-form input {
+  flex: 1 1 16rem;
+  min-inline-size: 0;
+  font: inherit;
+  padding: 0.75rem;
+  border: 1px solid var(--qgds-color-border, #ddd);
+  border-radius: var(--dsq-radius);
+  background: var(--qgds-color-background, #fff);
+  color: inherit;
+}
+.dsq-search-form input:focus-visible {
+  outline: 3px solid var(--qgds-color-focus-default, #002e85);
+  outline-offset: 2px;
+}
