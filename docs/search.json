@@ -1,0 +1,30 @@
+---
+layout: null
+sitemap: false
+---
+{%- comment -%}
+  Client-side search index. Every markdown page with a `title` is included
+  unless it sets `search_exclude: true`.
+{%- endcomment -%}
+{%- assign indexable = site.pages
+      | where_exp: "p", "p.title"
+      | where_exp: "p", "p.search_exclude != true"
+      | where_exp: "p", "p.path contains '.md'"
+      | sort: "title" -%}
+[
+{%- for item in indexable -%}
+  {%- assign seg = item.path | split: "/" -%}
+  {%- assign section_title = "Home" -%}
+  {%- if seg.size > 1 -%}
+    {%- assign section_index_path = seg[0] | append: "/index.md" -%}
+    {%- assign section = site.pages | where_exp: "p", "p.path == section_index_path" | first -%}
+    {%- if section -%}{%- assign section_title = section.title -%}{%- endif -%}
+  {%- endif -%}
+  {"title": {{ item.title | jsonify }},
+   "section": {{ section_title | jsonify }},
+   "url": {{ item.url | relative_url | jsonify }},
+   "summary": {{ item.summary | default: "" | jsonify }},
+   "body": {{ item.content | strip_html | normalize_whitespace | truncate: 1000 | jsonify }}}
+  {%- unless forloop.last -%},{%- endunless -%}
+{%- endfor -%}
+]

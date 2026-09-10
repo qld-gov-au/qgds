@@ -1,0 +1,27 @@
+---
+layout: default
+title: Search
+nav_exclude: true
+search_exclude: true
+sitemap: false
+---
+<div class="qgds-container dsq-layout">
+
+  <div class="dsq-layout__nav" id="dsq-nav-rail"></div>
+
+  <div class="dsq-layout__main">
+    <header class="dsq-page-header">
+      <h1>Search</h1>
+    </header>
+
+    <form action="{{ '/search.html' | relative_url }}" method="get" role="search" class="dsq-search-form">
+      <label class="sr-only" for="dsq-search-field">Search the design system</label>
+      <input id="dsq-search-field" name="q" type="search" placeholder="Search the design system">
+      <qgds-button type="submit" label="Search" variant="primary"></qgds-button>
+    </form>
+
+    <p id="dsq-search-heading" role="status">Enter a search term to begin.</p>
+
+    <ul id="dsq-search-results" class="dsq-results" data-search-endpoint="{{ '/search.json' | relative_url }}"></ul>
+  </div>
+</div>
