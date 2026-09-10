@@ -1,9 +1,4 @@
----
-# Front matter makes Jekyll process this file. `layout: null` stops the
-# site-wide default layout from wrapping it in HTML.
-layout: null
-sitemap: false
----
+
 /* =========================================================================
    Design system documentation site
    -------------------------------------------------------------------------
