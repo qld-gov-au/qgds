@@ -1,0 +1,43 @@
+---
+layout: default
+---
+<qgds-banner
+  variant="basic"
+  palette="deep"
+  heading="{{ page.hero_heading | default: site.title }}"
+  sub-heading="{{ page.hero_subheading | default: site.description }}">
+  <qgds-link
+    slot="cta"
+    href="{{ '/get-started/' | relative_url }}"
+    label="Get started"
+    icon-name="arrow-right"
+    has-trailing-icon></qgds-link>
+</qgds-banner>
+
+<div class="qgds-container dsq-layout">
+
+  <div class="dsq-layout__nav" id="dsq-nav-rail"></div>
+
+  <div class="dsq-layout__main">
+    <div class="dsq-content" data-content>
+      {{ content }}
+    </div>
+
+    <h2>Explore the design system</h2>
+    <div class="dsq-card-grid">
+      {%- assign sections = site.pages | where_exp: "p", "p.title" | sort: "nav_order" -%}
+      {%- for item in sections -%}
+        {%- assign seg = item.path | split: "/" -%}
+        {%- if seg.size != 2 or seg[1] != "index.md" -%}{%- continue -%}{%- endif -%}
+        {%- if item.nav_exclude -%}{%- continue -%}{%- endif -%}
+        <qgds-card
+          heading="{{ item.nav_title | default: item.title }}"
+          heading-level="h3"
+          href="{{ item.url | relative_url }}"
+          variant="arrow">
+          {{ item.summary }}
+        </qgds-card>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
