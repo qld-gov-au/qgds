@@ -1,5 +1,16 @@
 name: Build and deploy to GitHub Pages
 
+# Repo layout this workflow expects:
+#
+#   .github/workflows/jekyll.gh.pages.yml   <- this file (must be at repo root)
+#   docs/                                    <- the Jekyll site
+#     _config.yml
+#     Gemfile
+#     _layouts/ _includes/ assets/ ...
+#
+# Everything below runs inside docs/. If you move the site, change SITE_DIR
+# and nothing else.
+
 on:
   push:
     branches: [main]
@@ -14,32 +25,52 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  SITE_DIR: docs
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
+      # bundler-cache needs to find the Gemfile, which lives in docs/
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
           bundler-cache: true
+          working-directory: ${{ env.SITE_DIR }}
 
       - uses: actions/configure-pages@v5
         id: pages
 
-      # Only needed when _config.yml has `qgds.source: local`.
-      # Harmless otherwise.
+      # Only does anything when _config.yml has `qgds.source: local`.
       - name: Vendor QGDS web components
-        run: ./scripts/vendor-qgds.sh
-        if: ${{ hashFiles('assets/vendor/.keep') != '' }}
+        working-directory: ${{ env.SITE_DIR }}
+        run: |
+          if grep -qE '^\s+source:\s*local' _config.yml; then
+            bash ./scripts/vendor-qgds.sh
+          else
+            echo "qgds.source is not 'local' — skipping (components load from the CDN)."
+          fi
 
       - name: Build
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        working-directory: ${{ env.SITE_DIR }}
         env:
           JEKYLL_ENV: production
+        run: |
+          bundle exec jekyll build \
+            --destination "${{ github.workspace }}/_site" \
+            --baseurl "${{ steps.pages.outputs.base_path }}"
+
+      - name: Check for broken build
+        run: |
+          test -f "${{ github.workspace }}/_site/index.html" \
+            || { echo "::error::No index.html was produced — check the Jekyll log above."; exit 1; }
 
       - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ github.workspace }}/_site
 
   deploy:
     needs: build
