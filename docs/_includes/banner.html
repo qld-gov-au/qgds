@@ -1,0 +1,37 @@
+{%- comment -%}
+================================================================================
+  Page banner
+================================================================================
+  The page title, its summary and the breadcrumbs, in a <qgds-banner>. This is
+  how designsystem.qld.gov.au presents a page head, and it sits inside the
+  content column beside the vertical navigation rather than spanning the page.
+
+  Two things to know about the component:
+
+  - It renders the <h1> itself, inside its shadow root. Do not add another h1
+    to the page.
+  - `sub-heading` renders inside that h1, so it becomes part of the heading's
+    accessible name. The page summary therefore goes in the default slot (the
+    "abstract"), which renders as a separate block under the title.
+================================================================================
+{%- endcomment -%}
+
+<qgds-banner
+  class="dsq-banner"
+  variant="{{ include.variant | default: 'basic' }}"
+  palette="{{ include.palette | default: 'default' }}"
+  heading="{{ page.title }}">
+
+  {%- include breadcrumbs.html -%}
+
+  {%- if page.summary -%}
+  <p class="dsq-banner__summary">{{ page.summary }}</p>
+  {%- endif -%}
+
+  {%- if page.status or page.since -%}
+  <p class="dsq-meta">
+    {%- if page.status -%}<qgds-tag variant="info" label="{{ page.status }}" size="sm"></qgds-tag>{%- endif -%}
+    {%- if page.since -%}<qgds-tag label="Since {{ page.since }}" size="sm"></qgds-tag>{%- endif -%}
+  </p>
+  {%- endif -%}
+</qgds-banner>

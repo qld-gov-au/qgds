@@ -10,41 +10,31 @@ layout: default
   <div class="dsq-layout__nav" id="dsq-nav-rail"></div>
 
   <div class="dsq-layout__main">
-    <div class="dsq-breadcrumbs">
-      {%- include breadcrumbs.html -%}
+
+    {%- include banner.html -%}
+
+    <div class="dsq-layout__body">
+
+      {%- unless page.inpage_nav == false -%}
+      <qgds-inpage-nav id="dsq-inpage-nav" heading="On this page" hidden></qgds-inpage-nav>
+      {%- endunless -%}
+
+      <div class="dsq-content" data-content>
+        {{ content }}
+      </div>
+
+      <footer class="dsq-page-footer">
+        <p class="dsq-edit">
+          {%- if site.repository and site.repository != '' -%}
+          <qgds-link
+            href="{{ site.repository }}/edit/main/{% if site.source_dir != '' %}{{ site.source_dir }}/{% endif %}{{ page.path }}"
+            label="Edit this page on GitHub"
+            icon-name="external-link"
+            has-trailing-icon></qgds-link>
+          {%- endif -%}
+        </p>
+        <p class="dsq-updated">Last updated {{ page.last_updated | default: site.time | date: "%-d %B %Y" }}</p>
+      </footer>
     </div>
-
-    <header class="dsq-page-header">
-      {%- if page.eyebrow -%}<p class="dsq-eyebrow">{{ page.eyebrow }}</p>{%- endif -%}
-      <h1>{{ page.title }}</h1>
-      {%- if page.summary -%}<p class="dsq-lead">{{ page.summary }}</p>{%- endif -%}
-      {%- if page.status or page.since -%}
-      <p class="dsq-meta">
-        {%- if page.status -%}<qgds-tag variant="info" label="{{ page.status }}" size="sm"></qgds-tag>{%- endif -%}
-        {%- if page.since -%}<qgds-tag label="Since {{ page.since }}" size="sm"></qgds-tag>{%- endif -%}
-      </p>
-      {%- endif -%}
-    </header>
-
-    {%- unless page.inpage_nav == false -%}
-    <qgds-inpage-nav id="dsq-inpage-nav" heading="On this page" hidden></qgds-inpage-nav>
-    {%- endunless -%}
-
-    <div class="dsq-content" data-content>
-      {{ content }}
-    </div>
-
-    <footer class="dsq-page-footer">
-      <p class="dsq-edit">
-        {%- if site.repository -%}
-        <qgds-link
-          href="{{ site.repository }}/edit/main/{{ page.path }}"
-          label="Edit this page on GitHub"
-          icon-name="external-link"
-          has-trailing-icon></qgds-link>
-        {%- endif -%}
-      </p>
-      <p class="dsq-updated">Last updated {{ page.last_updated | default: site.time | date: "%-d %B %Y" }}</p>
-    </footer>
   </div>
 </div>
