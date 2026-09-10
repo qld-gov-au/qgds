@@ -66,6 +66,7 @@ main:focus { outline: none; }
 
 .dsq-page-header h1 {
   font-size: clamp(2rem, 1.4rem + 2.2vw, 3rem);
+  font-weight: 600;
   line-height: var(--qgds-line-height-heading, 1.25);
   color: var(--qgds-color-text-heading, #000053);
   margin: 0;
@@ -85,7 +86,7 @@ main:focus { outline: none; }
    Long-form content
    ------------------------------------------------------------------------- */
 
-.dsq-content { font-size: 1rem; line-height: var(--qgds-line-height-default, 1.45); }
+.dsq-content { font-size: 1rem; line-height: var(--qgds-line-height-defaul t, 1.45); }
 
 .dsq-content > * + * { margin-block-start: 1rem; }
 
@@ -93,6 +94,7 @@ main:focus { outline: none; }
 .dsq-content h3,
 .dsq-content h4 {
   color: var(--qgds-color-text-heading, #000053);
+  font-weight:600;
   line-height: var(--qgds-line-height-heading, 1.25);
   margin-block: 2.5rem 0.75rem;
   scroll-margin-block-start: 1.5rem;
