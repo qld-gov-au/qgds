@@ -1,9 +1,26 @@
-**Queensland Government Design System** · [Contact us](https://www.designsystem.qld.gov.au/about/contact-us) · If you have a question or would like to give feedback, you can get in touch with us.
+<qgds-footer
+  contact-statement="{{ site.contact.statement }}"
+  copyright-label="{{ site.footer.copyright }}"
+  site-links-heading="Site information"
+  custom-links-heading="{{ site.footer.custom_links_heading }}">
 
-[Copyright](https://www.qld.gov.au/legal/copyright) · [Disclaimer](https://www.qld.gov.au/legal/disclaimer) · [Privacy](https://www.qld.gov.au/legal/privacy) · [Right to information](https://www.qld.gov.au/about/rights-accountability/right-to-information) · [Accessibility](https://www.qld.gov.au/help/accessibility/) · [Jobs](https://smartjobs.qld.gov.au/jobtools/jncustomsearch.jobsearch?in_organid=14904) · [Other languages](https://www.qld.gov.au/languages/)
+  <p slot="aoc">{{ site.footer.acknowledgement }}</p>
 
-Follow us: [Facebook](https://www.instagram.com/qldgov/) · [LinkedIn](https://www.linkedin.com/company/queensland-government) · [YouTube](https://www.youtube.com/@QueenslandGovernment) · [Instagram](https://www.instagram.com/qldhealth/)
+  <qgds-footer-contact-item
+    slot="contact-link"
+    icon-id="email"
+    label="Email"
+    value="{{ site.contact.email }}"
+    href="mailto:{{ site.contact.email }}"></qgds-footer-contact-item>
 
-**Acknowledgement of Country:** Queensland Government acknowledges the Traditional Owners and Custodians of the land and pays respect to Elders past, present and future.
+  <qgds-link slot="site-main-link" href="https://www.qld.gov.au" label="Queensland Government"></qgds-link>
 
-© The State of Queensland 2026
+  {%- for link in site.footer.site_links -%}
+  <qgds-link slot="footer-site-link" href="{{ link.href }}" label="{{ link.label }}"></qgds-link>
+  {%- endfor -%}
+
+  {%- for link in site.footer.custom_links -%}
+  <qgds-link slot="footer-custom-link" href="{{ link.href | relative_url }}" label="{{ link.label }}"></qgds-link>
+  {%- endfor -%}
+
+</qgds-footer>
