@@ -2,7 +2,7 @@ name: Build and deploy to GitHub Pages
 
 # Repo layout this workflow expects:
 #
-#   .github/workflows/jekyll.gh.pages.yml   <- this file (must be at repo root)
+#   .github/workflows/jekyll-gh-pages.yml   <- this file (must be at repo root)
 #   docs/                                    <- the Jekyll site
 #     _config.yml
 #     Gemfile
@@ -44,14 +44,20 @@ jobs:
       - uses: actions/configure-pages@v5
         id: pages
 
-      # Only does anything when _config.yml has `qgds.source: local`.
+      # Reads `qgds.source` from _config.yml:
+      #   source -> build the component library from its repo and vendor it
+      #   local  -> vendor the pinned npm version
+      #   cdn    -> nothing to do
       - name: Vendor QGDS web components
         working-directory: ${{ env.SITE_DIR }}
         run: |
-          if grep -qE '^\s+source:\s*local' _config.yml; then
+          if grep -qE '^[[:space:]]+source:[[:space:]]*source' _config.yml; then
+            REF="$(grep -E '^[[:space:]]+source_ref:' _config.yml | head -1 | awk '{print $2}')"
+            bash ./scripts/vendor-qgds.sh --from-source "${REF:-main}"
+          elif grep -qE '^[[:space:]]+source:[[:space:]]*local' _config.yml; then
             bash ./scripts/vendor-qgds.sh
           else
-            echo "qgds.source is not 'local' — skipping (components load from the CDN)."
+            echo "qgds.source is 'cdn' — nothing to vendor."
           fi
 
       - name: Build

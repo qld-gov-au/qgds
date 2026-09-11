@@ -1,7 +1,8 @@
 {%- comment -%}
-  Resolves the QGDS asset base from _config.yml (`qgds.source`: cdn | local).
+  Resolves the QGDS asset base from _config.yml.
+  `qgds.source`: cdn (jsDelivr) | local (vendored npm) | source (vendored build).
 {%- endcomment -%}
-{%- if site.qgds.source == "local" -%}
+{%- if site.qgds.source == "local" or site.qgds.source == "source" -%}
   {%- assign qgds_css = site.qgds.local_base | append: "/css/qgds-web-components.css" | relative_url -%}
   {%- assign qgds_js  = site.qgds.local_base | append: "/js/qgds-web-components.js"  | relative_url -%}
 {%- else -%}

@@ -8,7 +8,7 @@ sitemap: false
    Documentation site behaviour
    -------------------------------------------------------------------------
    1. Dock the whole-site vertical nav into the left rail on wide viewports
-   2. Expand the branch of that nav containing the current page
+   2. Wrap markdown tables in <qgds-table>
    3. Build the "On this page" nav from the h2 headings in the content
    4. Copy-to-clipboard on example code blocks
    5. Header search: type-ahead suggestions + a /search.html results page
@@ -54,46 +54,9 @@ sitemap: false
 
   function watchViewport() {
     var mq = window.matchMedia(DESKTOP);
-    var handler = function () { dockNav(); expandCurrentBranch(); };
+    var handler = function () { dockNav(); };
     if (mq.addEventListener) mq.addEventListener("change", handler);
     else if (mq.addListener) mq.addListener(handler);
-  }
-
-  /* ---------------------------------------------------------------------
-     1. Expand the current branch
-     ---------------------------------------------------------------------
-     qgds-link-item starts collapsed and has no notion of a current page, so
-     the section the reader is in would otherwise be shut. The chevron toggle
-     lives in the component's shadow root; clicking it is the only supported
-     way to open the item from outside.
-     --------------------------------------------------------------------- */
-  function expandCurrentBranch() {
-    var nav = document.getElementById("main-nav");
-    if (!nav || !window.customElements) return;
-
-    Promise.all([
-      customElements.whenDefined("qgds-navigation"),
-      customElements.whenDefined("qgds-link-item"),
-    ]).then(function () {
-      var current = nav.querySelector("qgds-link-item[data-section-current]");
-      if (!current) return;
-
-      // The toggle only exists once the component has moved the nested items
-      // into a qgds-link-column and re-rendered, which takes an indeterminate
-      // number of frames. Poll for it rather than guessing a delay.
-      var attempts = 0;
-      (function tryExpand() {
-        var toggle = current.shadowRoot &&
-          current.shadowRoot.querySelector("button.dropdown-toggle");
-
-        if (toggle) {
-          if (toggle.getAttribute("aria-expanded") === "false") toggle.click();
-          return;
-        }
-        if (++attempts > 60) return; // ~1s at 60fps, then give up quietly
-        requestAnimationFrame(tryExpand);
-      })();
-    });
   }
 
   /* ---------------------------------------------------------------------
@@ -286,7 +249,6 @@ sitemap: false
   function init() {
     dockNav();
     watchViewport();
-    expandCurrentBranch();
     wrapTables();
     buildInpageNav();
     wireCopyButtons();

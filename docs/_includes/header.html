@@ -20,8 +20,15 @@
 {%- endif -%}
 
 <qgds-header site-name="{{ site.brand.site_name }}">
-  <qgds-attribution-bar slot="pre-header" palette="bold">
-    <qgds-link slot="site-name" href="https://www.qld.gov.au" label="Queensland Government"></qgds-link>
+  {%- comment -%}
+    The site name is set with `url` + `label`. Older builds (<= npm 0.3.4) used
+    a `site-name` slot instead; that slot no longer exists, and content placed
+    in it silently disappears.
+  {%- endcomment -%}
+  <qgds-attribution-bar
+    slot="pre-header"
+    url="https://www.qld.gov.au"
+    label="Queensland Government">
     <qgds-link href="{{ '/about/contact.html' | relative_url }}" label="Contact us"></qgds-link>
   </qgds-attribution-bar>
 

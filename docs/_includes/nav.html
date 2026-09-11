@@ -6,13 +6,23 @@
   structure. Nothing is hand-maintained: drop a .md file into a section folder
   and it appears here.
 
+  REQUIRES a build of @qld-gov-au/qgds-web-components that includes
+  <qgds-navigation-item>. That component is NOT in 0.3.4 (the newest npm
+  release at the time of writing) — see README, "Loading the components".
+  Against 0.3.4 the elements below do not upgrade and the nav renders empty.
+
   Structure it understands (these are SOURCE paths, so this is independent of
   whatever `permalink` style you use):
 
-    components/index.md            -> top-level item
-    components/button.md           -> child of "Components"
-    components/form/index.md       -> child of "Components", with children
-    components/form/text-input.md  -> child of "Form"
+    components/index.md            -> level 1 item
+    components/button.md           -> level 2, under "Components"
+    components/form/index.md       -> level 2, under "Components"
+    components/form/text-input.md  -> level 2, listed after "Form"
+
+  qgds-navigation-item supports exactly two levels: a level-1 item sets
+  `level = 2` on its children, and a level-2 item scrubs any children of its
+  own. A third level is therefore flattened into level 2, emitted directly
+  after its parent folder so reading order still groups it.
 
   Front matter each page can set:
     title:        required — a page without a title is skipped
@@ -20,16 +30,11 @@
     nav_order:    optional integer, ascending (default 100 via _config.yml)
     nav_exclude:  optional, true to hide the page from navigation
 
-  It lives in the header's `navigation` slot, which is what makes the header
-  render its mobile Menu button (the header only shows it when that slot holds
-  exactly one qgds-navigation). On viewports >= 992px, assets/js/site.js moves
-  this element into the left rail; below that it stays in the header and opens
-  as the standard mobile drawer. Without JavaScript it renders in the header —
-  vertical, complete and usable, just not in the rail.
+  `is-active` is all that is needed to mark the current page: in vertical mode
+  the component opens the parent of an active child by itself.
 ================================================================================
 {%- endcomment -%}
 
-{%- assign current_section = page.path | split: "/" | first -%}
 {%- assign nav_pages = site.pages
       | where_exp: "p", "p.title"
       | where_exp: "p", "p.nav_exclude != true"
@@ -41,61 +46,62 @@
   variant="vertical"
   navigation-label="Main">
 
-  <qgds-link-item
-    is-nav-item
+  <qgds-navigation-item
     href="{{ '/' | relative_url }}"
     label="Home"
-    {% if page.url == '/' %}is-current{% endif %}></qgds-link-item>
+    {% if page.url == '/' %}is-active{% endif %}></qgds-navigation-item>
 
   {%- for section in nav_pages -%}
     {%- assign sseg = section.path | split: "/" -%}
     {%- if sseg.size != 2 or sseg[1] != "index.md" -%}{%- continue -%}{%- endif -%}
     {%- assign section_slug = sseg[0] -%}
 
-    <qgds-link-item
-      is-nav-item
+    <qgds-navigation-item
       href="{{ section.url | relative_url }}"
       label="{{ section.nav_title | default: section.title }}"
-      {% if page.url == section.url %}is-current{% endif %}
-      {% if current_section == section_slug %}data-section-current{% endif %}>
+      {% if page.url == section.url %}is-active{% endif %}>
 
       {%- for item in nav_pages -%}
         {%- assign seg = item.path | split: "/" -%}
         {%- if seg[0] != section_slug -%}{%- continue -%}{%- endif -%}
         {%- assign depth = seg | size -%}
 
-        {%- comment -%} Child: a file directly in the section folder {%- endcomment -%}
+        {%- comment -%} A file directly in the section folder {%- endcomment -%}
         {%- assign is_leaf = false -%}
         {%- if depth == 2 and seg[1] != "index.md" -%}{%- assign is_leaf = true -%}{%- endif -%}
 
-        {%- comment -%} Child: the index.md of a sub-folder {%- endcomment -%}
+        {%- comment -%} The index.md of a sub-folder {%- endcomment -%}
         {%- assign is_folder = false -%}
         {%- if depth == 3 and seg[2] == "index.md" -%}{%- assign is_folder = true -%}{%- endif -%}
 
         {%- unless is_leaf or is_folder -%}{%- continue -%}{%- endunless -%}
 
-        <qgds-link-item
+        <qgds-navigation-item
           href="{{ item.url | relative_url }}"
           label="{{ item.nav_title | default: item.title }}"
-          {% if page.url == item.url %}data-current{% endif %}>
-          {%- if is_folder -%}
-            {%- assign folder_slug = seg[1] -%}
-            {%- for child in nav_pages -%}
-              {%- assign cseg = child.path | split: "/" -%}
-              {%- if cseg.size != 3 -%}{%- continue -%}{%- endif -%}
-              {%- if cseg[0] != section_slug -%}{%- continue -%}{%- endif -%}
-              {%- if cseg[1] != folder_slug -%}{%- continue -%}{%- endif -%}
-              {%- if cseg[2] == "index.md" -%}{%- continue -%}{%- endif -%}
-              <qgds-link-item
-                class="dsq-nav-level-3"
-                href="{{ child.url | relative_url }}"
-                label="{{ child.nav_title | default: child.title }}"
-                {% if page.url == child.url %}data-current{% endif %}></qgds-link-item>
-            {%- endfor -%}
-          {%- endif -%}
-        </qgds-link-item>
+          {% if page.url == item.url %}is-active{% endif %}></qgds-navigation-item>
+
+        {%- comment -%}
+          A sub-folder's pages, flattened to level 2 and emitted right after
+          their folder so they still read as a group.
+        {%- endcomment -%}
+        {%- if is_folder -%}
+          {%- assign folder_slug = seg[1] -%}
+          {%- for child in nav_pages -%}
+            {%- assign cseg = child.path | split: "/" -%}
+            {%- if cseg.size != 3 -%}{%- continue -%}{%- endif -%}
+            {%- if cseg[0] != section_slug -%}{%- continue -%}{%- endif -%}
+            {%- if cseg[1] != folder_slug -%}{%- continue -%}{%- endif -%}
+            {%- if cseg[2] == "index.md" -%}{%- continue -%}{%- endif -%}
+            <qgds-navigation-item
+              class="dsq-nav-sub"
+              href="{{ child.url | relative_url }}"
+              label="{{ child.nav_title | default: child.title }}"
+              {% if page.url == child.url %}is-active{% endif %}></qgds-navigation-item>
+          {%- endfor -%}
+        {%- endif -%}
 
       {%- endfor -%}
-    </qgds-link-item>
+    </qgds-navigation-item>
   {%- endfor -%}
 </qgds-navigation>

@@ -14,14 +14,35 @@ lang: en-AU
 url: ""
 baseurl: ""
 
+# Where this site lives inside the repository, no leading or trailing slash.
+# Used only to build the "Edit this page on GitHub" links. Set to "" if the
+# site is at the repository root.
+source_dir: "docs"
+
+# Uncomment to show an "Edit this page on GitHub" link in the page footer.
+# repository: "https://github.com/your-org/your-repo"
+
 # ---------------------------------------------------------------------------
 # QGDS web components
 # ---------------------------------------------------------------------------
 # source: cdn   -> load ESM + CSS from jsDelivr (nothing to install)
 # source: local -> load from assets/vendor/qgds (run scripts/vendor-qgds.sh first)
+# IMPORTANT: the navigation uses <qgds-navigation-item>, which is NOT in npm
+# 0.3.4 (the newest release at the time of writing). Against 0.3.4 the nav
+# renders empty. Until a release ships that includes it, build from source:
+#     ./scripts/vendor-qgds.sh --from-source
+#     # then set source: local below
+# Once it is published, set `version` to that release and switch back to cdn.
+# source: cdn    -> jsDelivr (npm). Simplest, but only gets published releases.
+# source: local  -> assets/vendor/qgds, committed. Run scripts/vendor-qgds.sh.
+# source: source -> the workflow builds the library from the repo's main branch
+#                   at deploy time and vendors it. No local tooling, nothing
+#                   committed. Use this to get <qgds-navigation-item> today.
 qgds:
   version: "0.3.4"
   source: cdn
+  # Branch or tag to build when `source: source`
+  source_ref: main
   cdn_base: "https://cdn.jsdelivr.net/npm/@qld-gov-au/qgds-web-components"
   local_base: "/assets/vendor/qgds"
 

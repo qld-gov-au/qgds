@@ -1,4 +1,3 @@
-
 /* =========================================================================
    Design system documentation site
    -------------------------------------------------------------------------
@@ -409,17 +408,9 @@ main:focus { outline: none; }
   }
 }
 
-/* Current page. Nested items are not nav items, so the component renders no
-   aria-current for them — these rules are the only visible cue. Font weight
-   and colour are inherited properties, so they cross into the shadow root. */
-qgds-link-item[data-current] {
-  font-weight: 600;
-  color: var(--qgds-color-text-heading, #000053);
-  box-shadow: inset 3px 0 0 0 var(--qgds-color-action-primary, #005eb8);
-}
-
-/* Third-level items sit under a sub-folder index */
-qgds-link-item.dsq-nav-level-3 { padding-inline-start: 1rem; }
+/* qgds-navigation-item renders its own active state from `is-active`, so the
+   only thing left to do here is indent a sub-folder's flattened pages. */
+qgds-navigation-item.dsq-nav-sub { --dsq-nav-sub-indent: 1rem; padding-inline-start: var(--dsq-nav-sub-indent); }
 
 /* -------------------------------------------------------------------------
    Search form
