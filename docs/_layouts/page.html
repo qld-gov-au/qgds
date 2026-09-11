@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-<div class="qgds-container dsq-layout">
+<div class="dsq-layout">
 
   {%- comment -%}
     The whole-site vertical navigation is moved into this rail by site.js at
@@ -13,7 +13,7 @@ layout: default
 
     {%- include banner.html palette="deep"-%}
 
-    <div class="dsq-layout__body">
+    <div class="qgds-container dsq-layout__body">
 
       {%- unless page.inpage_nav == false -%}
       <qgds-inpage-nav id="dsq-inpage-nav" heading="On this page" hidden></qgds-inpage-nav>
