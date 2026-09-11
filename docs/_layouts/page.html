@@ -11,7 +11,7 @@ layout: default
 
   <div class="dsq-layout__main">
 
-    {%- include banner.html -%}
+    {%- include banner.html palette="deep"-%}
 
     <div class="dsq-layout__body">
 
@@ -23,18 +23,7 @@ layout: default
         {{ content }}
       </div>
 
-      <footer class="dsq-page-footer">
-        <p class="dsq-edit">
-          {%- if site.repository and site.repository != '' -%}
-          <qgds-link
-            href="{{ site.repository }}/edit/main/{% if site.source_dir != '' %}{{ site.source_dir }}/{% endif %}{{ page.path }}"
-            label="Edit this page on GitHub"
-            icon-name="external-link"
-            has-trailing-icon></qgds-link>
-          {%- endif -%}
-        </p>
-        <p class="dsq-updated">Last updated {{ page.last_updated | default: site.time | date: "%-d %B %Y" }}</p>
-      </footer>
+      {%- include footer.html palette="bold" -%}
     </div>
   </div>
 </div>
