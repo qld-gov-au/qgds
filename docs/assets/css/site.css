@@ -446,3 +446,8 @@ qgds-navigation-item.dsq-nav-sub { --dsq-nav-sub-indent: 1rem; padding-inline-st
   outline: 3px solid var(--qgds-color-focus-default, #002e85);
   outline-offset: 2px;
 }
+
+
+.header-content .qgds-container {
+  max-inline-size: auto !important;
+}
