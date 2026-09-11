@@ -47,14 +47,17 @@ main:focus { outline: none; }
 @media (min-width: 992px) {
   .dsq-layout {
     grid-template-columns: var(--dsq-nav-width) minmax(0, 1fr);
-    gap: 3rem;
+    gap: 0;
   }
 }
 
 .dsq-layout__main { min-width: 0; }
 
 /* The banner spans the content column; prose below it keeps the measure. */
-.dsq-layout__body { max-width: var(--dsq-max-content); padding-block-start: 0.5rem; }
+.dsq-layout__body { 
+  max-width: var(--dsq-max-content); 
+  padding: 4rem 3rem;
+}
 
 
 /* -------------------------------------------------------------------------
