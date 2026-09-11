@@ -63,12 +63,6 @@ main:focus { outline: none; }
 .dsq-layout__body { 
   /* max-width: var(--dsq-max-content);  */
   padding-block: 4rem;
-  max-inline-size: 82rem;
-  margin-inline: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-self: center;
-  width: 100%;
 }
 
 
