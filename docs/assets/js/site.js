@@ -121,6 +121,41 @@ sitemap: false
   }
 
   /* ---------------------------------------------------------------------
+     1b. Wrap markdown tables in <qgds-table>
+     ---------------------------------------------------------------------
+     Kramdown renders a plain <table> from markdown table syntax. qgds-table
+     slots exactly one native <table>, so wrapping the rendered element gives
+     the component treatment without forcing authors to write raw HTML in
+     every content file.
+
+     Per-table overrides come from an attribute list on the preceding
+     comment-free marker, or from the page's `table_options` front matter;
+     both are optional and the defaults suit a documentation table.
+     --------------------------------------------------------------------- */
+  function wrapTables() {
+    var content = document.querySelector("[data-content]");
+    if (!content) return;
+
+    var defaults = (window.DSQ_TABLE_DEFAULTS || {});
+    var tables = content.querySelectorAll("table");
+
+    Array.prototype.forEach.call(tables, function (table) {
+      // Skip anything already inside a qgds-table, and anything inside a live
+      // example — those are authored markup and must render exactly as written.
+      if (table.closest("qgds-table")) return;
+      if (table.closest(".dsq-example__preview")) return;
+
+      var wrapper = document.createElement("qgds-table");
+      wrapper.setAttribute("responsive", table.dataset.responsive || defaults.responsive || "scroll");
+      if (table.dataset.striped !== "false" && defaults.striped !== false) wrapper.setAttribute("is-striped", "");
+      if (table.dataset.border === "true" || defaults.border) wrapper.setAttribute("has-border", "");
+
+      table.parentNode.insertBefore(wrapper, table);
+      wrapper.appendChild(table);
+    });
+  }
+
+  /* ---------------------------------------------------------------------
      2. Copy code
      --------------------------------------------------------------------- */
   function wireCopyButtons() {
@@ -252,6 +287,7 @@ sitemap: false
     dockNav();
     watchViewport();
     expandCurrentBranch();
+    wrapTables();
     buildInpageNav();
     wireCopyButtons();
     wireHeaderSearch();
