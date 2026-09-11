@@ -28,7 +28,14 @@ main:focus { outline: none; }
    Page shell
    ------------------------------------------------------------------------- */
 
-.dsq-breadcrumbs { padding-block: 0 1.5rem; }
+/* Banner: page title, summary and breadcrumbs */
+.dsq-banner { display: block; margin-block-end: 0; }
+.dsq-banner__summary {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 42rem;
+}
 
 .dsq-layout {
   display: grid;
@@ -45,40 +52,15 @@ main:focus { outline: none; }
   }
 }
 
-.dsq-layout__main { min-width: 0; max-width: var(--dsq-max-content); }
+.dsq-layout__main { min-width: 0; }
 
-.dsq-home { padding-block: 2.5rem 4rem; }
+/* The banner spans the content column; prose below it keeps the measure. */
+.dsq-layout__body { max-width: var(--dsq-max-content); padding-block-start: 0.5rem; }
+
 
 /* -------------------------------------------------------------------------
    Page header
    ------------------------------------------------------------------------- */
-
-.dsq-page-header { margin-block-end: 2rem; }
-
-.dsq-eyebrow {
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--qgds-color-text-subtle, #3d3d3d);
-  margin: 0 0 0.5rem;
-}
-
-.dsq-page-header h1 {
-  font-size: clamp(2rem, 1.4rem + 2.2vw, 3rem);
-  font-weight: 600;
-  line-height: var(--qgds-line-height-heading, 1.25);
-  color: var(--qgds-color-text-heading, #000053);
-  margin: 0;
-}
-
-.dsq-lead {
-  font-size: 1.25rem;
-  line-height: 1.5;
-  color: var(--qgds-color-text-subtle, #3d3d3d);
-  margin: 1rem 0 0;
-  max-width: 42rem;
-}
 
 .dsq-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0 0; }
 
@@ -86,7 +68,7 @@ main:focus { outline: none; }
    Long-form content
    ------------------------------------------------------------------------- */
 
-.dsq-content { font-size: 1rem; line-height: var(--qgds-line-height-defaul t, 1.45); }
+.dsq-content { font-size: 1rem; line-height: var(--qgds-line-height-default, 1.45); }
 
 .dsq-content > * + * { margin-block-start: 1rem; }
 
@@ -94,7 +76,6 @@ main:focus { outline: none; }
 .dsq-content h3,
 .dsq-content h4 {
   color: var(--qgds-color-text-heading, #000053);
-  font-weight:600;
   line-height: var(--qgds-line-height-heading, 1.25);
   margin-block: 2.5rem 0.75rem;
   scroll-margin-block-start: 1.5rem;
@@ -138,24 +119,28 @@ main:focus { outline: none; }
 }
 
 /* Tables written as plain markdown still get the QGDS look */
-.dsq-content table {
+/* qgds-table styles the table it wraps. These rules are the no-JS fallback,
+   scoped so they stop applying the moment the wrapper is in place. */
+.dsq-content > table,
+.dsq-content > * > table {
   inline-size: 100%;
   border-collapse: collapse;
   font-size: 0.9375rem;
   display: block;
   overflow-x: auto;
 }
-.dsq-content th,
-.dsq-content td {
+.dsq-content > table th,
+.dsq-content > table td {
   text-align: start;
   padding: 0.75rem;
   border-block-end: 1px solid var(--qgds-color-border, #ddd);
   vertical-align: top;
 }
-.dsq-content thead th {
+.dsq-content > table thead th {
   border-block-end: 2px solid var(--qgds-color-text-heading, #000053);
   color: var(--qgds-color-text-heading, #000053);
 }
+.dsq-content qgds-table { display: block; margin-block: 1.5rem; }
 
 /* -------------------------------------------------------------------------
    Code
@@ -308,6 +293,8 @@ main:focus { outline: none; }
 /* -------------------------------------------------------------------------
    Card grids
    ------------------------------------------------------------------------- */
+
+.dsq-layout__body .dsq-card-grid { max-width: none; }
 
 .dsq-card-grid {
   display: grid;
