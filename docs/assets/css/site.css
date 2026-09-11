@@ -56,7 +56,7 @@ main:focus { outline: none; }
 /* The banner spans the content column; prose below it keeps the measure. */
 .dsq-layout__body { 
   max-width: var(--dsq-max-content); 
-  padding: 4rem 3rem;
+  padding: 4rem 2rem;
 }
 
 
@@ -401,6 +401,7 @@ main:focus { outline: none; }
 @media (min-width: 992px) {
   #dsq-nav-rail {
     position: sticky;
+    top: 0;
     max-block-size: calc(100vh - 2rem);
     overscroll-behavior: contain;
     border-inline-end: 1px solid var(--qgds-color-border, #ddd);
