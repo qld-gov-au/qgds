@@ -22,7 +22,7 @@
   palette="{{ include.palette | default: 'default' }}"
   heading="{{ page.title }}">
 
-  {%- include breadcrumbs.html -%}
+  {%- include breadcrumbs.html palett="deep" -%}
 
   {%- if page.summary -%}
   <p class="dsq-banner__summary">{{ page.summary }}</p>
