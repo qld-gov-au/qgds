@@ -10,6 +10,7 @@
     slot="contact-link"
     icon-id="email"
     label="Email"
+    palette="{{ include.palette | default: 'default' }}"
     value="{{ site.contact.email }}"
     href="mailto:{{ site.contact.email }}"></qgds-footer-contact-item>
 
