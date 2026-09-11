@@ -7,7 +7,7 @@
 {%- assign depth = seg | size -%}
 
 <qgds-breadcrumbs slot="breadcrumbs" aria-label="Breadcrumb">
-  <qgds-breadcrumbs-item url="{{ '/' | relative_url }}">Home</qgds-breadcrumbs-item>
+  <qgds-breadcrumbs-item href="{{ '/' | relative_url }}">Home</qgds-breadcrumbs-item>
 
   {%- if depth > 1 -%}
     {%- assign section_index_path = seg[0] | append: "/index.md" -%}
@@ -15,7 +15,7 @@
     {%- if section_index -%}
       {%- assign is_last_section = false -%}
       {%- if page.url == section_index.url %}{% assign is_last_section = true %}{% endif -%}
-      <qgds-breadcrumbs-item url="{{ section_index.url | relative_url }}" {% if is_last_section %}is-last{% endif %}>{{ section_index.nav_title | default: section_index.title }}</qgds-breadcrumbs-item>
+      <qgds-breadcrumbs-item href="{{ section_index.url | relative_url }}" {% if is_last_section %}is-last{% endif %}>{{ section_index.nav_title | default: section_index.title }}</qgds-breadcrumbs-item>
     {%- endif -%}
   {%- endif -%}
 
@@ -25,7 +25,7 @@
     {%- if folder_index -%}
       {%- assign is_last_folder = false -%}
       {%- if page.url == folder_index.url %}{% assign is_last_folder = true %}{% endif -%}
-      <qgds-breadcrumbs-item url="{{ folder_index.url | relative_url }}" {% if is_last_folder %}is-last{% endif %}>{{ folder_index.nav_title | default: folder_index.title }}</qgds-breadcrumbs-item>
+      <qgds-breadcrumbs-item href="{{ folder_index.url | relative_url }}" {% if is_last_folder %}is-last{% endif %}>{{ folder_index.nav_title | default: folder_index.title }}</qgds-breadcrumbs-item>
     {%- endif -%}
   {%- endif -%}
 
