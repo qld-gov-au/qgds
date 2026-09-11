@@ -40,7 +40,7 @@ source_dir: "docs"
 #                   committed. Use this to get <qgds-navigation-item> today.
 qgds:
   version: "0.3.4"
-  source: cdn
+  source: source
   # Branch or tag to build when `source: source`
   source_ref: main
   cdn_base: "https://cdn.jsdelivr.net/npm/@qld-gov-au/qgds-web-components"
