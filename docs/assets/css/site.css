@@ -40,7 +40,7 @@ main:focus { outline: none; }
   display: grid;
   gap: var(--dsq-gap);
   grid-template-columns: 1fr;
-  padding-block: 1rem 4rem;
+  padding-block: 0 4rem;
   align-items: start;
 }
 
@@ -398,13 +398,10 @@ main:focus { outline: none; }
 @media (min-width: 992px) {
   #dsq-nav-rail {
     position: sticky;
-    top: 1rem;
     max-block-size: calc(100vh - 2rem);
-    overflow-y: auto;
     overscroll-behavior: contain;
-    padding-block: 0.5rem;
     border-inline-end: 1px solid var(--qgds-color-border, #ddd);
-    padding-inline-end: 1rem;
+    z-index: -1;
   }
 }
 
