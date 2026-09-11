@@ -6,7 +6,7 @@
 {%- assign seg = page.path | split: "/" -%}
 {%- assign depth = seg | size -%}
 
-<qgds-breadcrumbs aria-label="Breadcrumb">
+<qgds-breadcrumbs slot="breadcrumbs" aria-label="Breadcrumb">
   <qgds-breadcrumbs-item url="{{ '/' | relative_url }}">Home</qgds-breadcrumbs-item>
 
   {%- if depth > 1 -%}

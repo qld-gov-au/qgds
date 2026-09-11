@@ -8,7 +8,7 @@ summary: >-
 
 {% capture demo_contact %}
 <qgds-inpage-alert variant="info" heading="Before you get in touch" heading-level="3">
-  <p>Check the <a href="/about/contribute.html">Contribute</a> page first — most questions about adding a page or proposing a component are answered there.</p>
+  <p>Check the <a href="{{ '/about/contribute.html' | relative_url }}">Contribute</a> page first — most questions about adding a page or proposing a component are answered there.</p>
 </qgds-inpage-alert>
 {% endcapture %}
 {% include example.html code=demo_contact padded="false" %}

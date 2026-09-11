@@ -12,4 +12,4 @@ footer — that you copy and fill in. Templates fix the decisions that should be
 the same on every page so you can spend your effort on the content.
 
 Every template in this section assumes the QGDS stylesheet and module are
-already loaded. See [Developing]({{ '/get-started/developing.html' | relative_url }}).
+already loaded. See [Developing]({{ '/get-started/develop.html' | relative_url }}).

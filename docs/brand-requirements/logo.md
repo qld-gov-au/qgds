@@ -10,7 +10,7 @@ The `qgds-logo` component renders the Coat of Arms at the correct size, with the
 correct clear space, and links it to the site home page.
 
 {% capture demo_logo %}
-<qgds-logo logo="coa-delivering-for-qld" href="/" alt="Queensland Government home"></qgds-logo>
+<qgds-logo logo="coa-delivering-for-qld" href="{{ '/' | relative_url }}" alt="Queensland Government home"></qgds-logo>
 {% endcapture %}
 {% include example.html code=demo_logo title="Coat of Arms" %}
 
