@@ -4,22 +4,19 @@ nav_order: 10
 status: Stable
 since: "0.1.0"
 summary: >-
-  Accordions show and hide sections of related content on the same page, so
-  users only see the information they need.
+  May also be known as:
+  Arrow toggle, collapsible sections, disclosure, expander
 ---
 
-Accordions allow users to show and hide sections of related content on the same
-page, reducing cognitive load by presenting only the information a user needs at
-any given time.
+## Overview
 
-Also known as: expandable section, collapsible panel, disclosure widget.
+Accordions expand and collapse sections of content.
 
-## Variants
+There are 2 types of accordions available in the Design System, single action accordions and accordion groups.
 
-- **Single accordion** — one expandable panel. Use for video transcripts, or for
-  reference material at the foot of an article.
-- **Accordion group** — a set of related panels with optional "Open all" and
-  "Close all" controls.
+## Single accordion
+
+A singular method of expanding and collapsing a piece of content with a title. These are best used for transcripts of videos, or for references at the footer of an article.
 
 {% capture demo_accordion %}
 <qgds-accordion-group show-controls="auto">
@@ -36,41 +33,49 @@ Also known as: expandable section, collapsible panel, disclosure widget.
 {% endcapture %}
 {% include example.html code=demo_accordion title="Accordion group" %}
 
-## Usage guidance
+## Accordion group
+
+A group of accordions that expand and collapse on click. Only the accordion that's clicked changes.
+
+{% capture demo_accordion %}
+  <qgds-accordion title="Transcript">
+    <p>You will need your customer reference number, a form of photo identification, and proof of your current address.</p>
+  </qgds-accordion>
+{% endcapture %}
+{% include example.html code=demo_accordion title="Single accordion" %}
+
+## Usage guidelines
 
 ### When to use an accordion
 
-Use an accordion when:
+We recommend accordions be used sparingly for primary content on a page. While they can be appropriate for organising small, specific sections of content, accordions aren’t a suitable replacement for well formatted plain text. If a user needs all, or most of the information on the page it should be visible, not hidden inside an accordion.
 
-- The page holds several sections of content and users are unlikely to need all
-  of them at once
-- Screen space is limited and content can be disclosed selectively
-- Users know which section holds the information they came for
+Before using an accordion, consider whether the benefits outweigh the negative usability impacts.
+
+- **Hiding content makes it harder for a user to scan a webpage.** If your content is hidden inside an accordion, it can be difficult for a user to scan the whole page for content relevant to them. Web browsers' ‘Find on page…' search functions don’t detect content hidden by accordions, making it harder for users to locate text.
+- **Accordions increase cognitive load.** Forcing a user to click on each accordion to get the full text fragments their user experience, causing them to switch focus between accordions to get to the information. It’s also possible with hidden content, that a user might not see important information.
+
+**Use an accordion when:**
+- users need only a few key pieces of content on a single page
+- hiding unimportant content within an accordion means users can efficiently focus on the few topics that matter (Loranger 2014).
 
 ### When not to use an accordion
 
-Avoid an accordion when:
+**Avoid an accordion when:**
+- your audience needs most or all of the content on the page to answer their questions (Loranger 2014)
+- the amount of content it would need to contain will make the page slow to load
+- you need to split up a series of questions into sections, use separate pages instead
+- you have very short content, use lists or paragraphs instead
+- you have very long content, use tabs or separate pages instead
+- you use any other UI elements within the header
+- there is important information which if hidden could be missed
+- you want to shorten a page.
 
-- Your audience needs most or all of the content to answer their question —
-  showing it by default is more appropriate (Loranger 2014)
-- The content is short enough to display in full
-- Users need to compare information across panels — use a table instead
-- There is only one item to expand — use a standard content section
+### Open and close all button
 
-### Do and don't
+If you have 3 or more accordion buttons in a stack, you can add the expand and close all button as an option.
 
-| Do | Don't |
-|---|---|
-| Write headings that describe what is inside the panel | Use vague labels like "More information" |
-| Allow multiple panels to be open at once | Collapse one panel when another opens |
-| Use "Open all" / "Close all" for groups of three or more | Put content every user needs inside an accordion |
-| Use a single accordion for transcripts and footnotes | Nest an accordion inside another accordion |
-
-### Content guidelines
-
-Keep headings under 10 words. The heading must tell users what they will find so
-they can decide whether to open the panel. Prefer noun-led headings ("Fees and
-charges") over gerunds ("Paying your fees").
+<hr>
 
 ## Design rationale
 
